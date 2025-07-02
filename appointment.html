@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务套餐预约</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .confirmation {
+            display: none;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>服务套餐预约</h1>
+    
+    <form id="appointmentForm">
+        <div class="form-group">
+            <label for="name">您的姓名</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">电子邮箱</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">联系电话</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="service">选择服务套餐</label>
+            <select id="service" name="service" required>
+                <option value="">-- 请选择套餐 --</option>
+                <option value="488">488套餐</option>
+                <option value="666">666套餐</option>
+                <option value="888">888套餐</option>
+                <option value="1222">1222套餐</option>
+                <option value="1666">1666套餐</option>
+                <option value="1888">1888套餐</option>
+                <option value="lifetime">终身套餐</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="date">预约日期</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="time">预约时间</label>
+            <select id="time" name="time" required>
+                <option value="">-- 请选择 --</option>
+                <option value="09:00-10:00">09:00-10:00</option>
+                <option value="10:00-11:00">10:00-11:00</option>
+                <option value="11:00-12:00">11:00-12:00</option>
+                <option value="13:00-14:00">13:00-14:00</option>
+                <option value="14:00-15:00">14:00-15:00</option>
+                <option value="15:00-16:00">15:00-16:00</option>
+                <option value="16:00-17:00">16:00-17:00</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="notes">备注信息</label>
+            <input type="text" id="notes" name="notes" placeholder="如有特殊需求请在此说明">
+        </div>
+        
+        <button type="submit">提交预约</button>
+    </form>
+    
+    <div id="confirmation" class="confirmation">
+        <h2>感谢您的预约！</h2>
+        <p>我们已经收到您的预约请求，稍后会通过电子邮件或电话与您确认。</p>
+        <p id="appointmentDetails"></p>
+    </div>
+    
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const name = document.getElementById('name').value;
+            const service = document.getElementById('service').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            // 显示确认信息
+            document.getElementById('appointmentDetails').innerHTML = `
+                <strong>预约详情：</strong><br>
+                姓名：${name}<br>
+                套餐类型：${document.getElementById('service').options[document.getElementById('service').selectedIndex].text}<br>
+                时间：${date} ${time}
+            `;
+            
+            document.getElementById('confirmation').style.display = 'block';
+            document.getElementById('appointmentForm').reset();
+            
+            // 在实际应用中，这里应该添加将数据发送到服务器的代码
+            // 例如使用fetch API或XMLHttpRequest
+        });
+        
+        // 设置最小日期为今天
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+    </script>
+</body>
+</html>
